@@ -99,6 +99,16 @@
             document.getElementById('media-casos').textContent = (somaCasos / totalEstados).toFixed(2);
             document.getElementById('media-suspeitos').textContent = (somaSuspeitos / totalEstados).toFixed(2);
             document.getElementById('media-mortes').textContent = mediaMortes.toFixed(2);
+
+            const infoRelacao = document.createElement('div');
+            infoRelacao.style.marginTop = '20px';
+            infoRelacao.innerHTML = `<strong>Estado com maior relação Casos/Falecimentos:</strong> ${estadoMaiorRelacao.state} (${estadoMaiorRelacao.uf}) - Relação: ${maiorRelacao.toFixed(2)}`;
+            document.body.appendChild(infoRelacao);
+
+            const infoRelacaoMenor = document.createElement('div');
+            infoRelacaoMenor.style.marginTop = '8px';
+            infoRelacaoMenor.innerHTML = `<strong>Estado com menor relação Casos/Falecimentos:</strong> ${estadoMenorRelacao.state} (${estadoMenorRelacao.uf}) - Relação: ${menorRelacao.toFixed(2)}`;
+            document.body.appendChild(infoRelacaoMenor);
         }
         carregarDados();
     </script>
