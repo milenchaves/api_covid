@@ -64,6 +64,24 @@
             let totalEstados = estados.length;
 
             estados.forEach(estado => {
+                somaCasos += estado.cases;
+                somaSuspeitos += estado.suspects;
+                somaMortes += estado.deaths;
+            });
+
+            const mediaMortes = somaMortes / totalEstados;
+
+            let maiorRelacao = -1;
+            let estadoMaiorRelacao = null;
+            estados.forEach(estado => {
+                let relacao = estado.deaths === 0 ? 0 : estado.cases / estado.deaths;
+                if (relacao > maiorRelacao) {
+                    maiorRelacao = relacao;
+                    estadoMaiorRelacao = estado;
+                }
+            });
+
+            estados.forEach(estado => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td>${estado.state}</td>
@@ -72,15 +90,15 @@
                     <td>${estado.suspects}</td>
                     <td>${estado.deaths}</td>
                 `;
+                if (estado.deaths > mediaMortes) {
+                    tr.style.fontWeight = 'bold'; 
+                }
                 tbody.appendChild(tr);
-                somaCasos += estado.cases;
-                somaSuspeitos += estado.suspects;
-                somaMortes += estado.deaths;
             });
 
             document.getElementById('media-casos').textContent = (somaCasos / totalEstados).toFixed(2);
             document.getElementById('media-suspeitos').textContent = (somaSuspeitos / totalEstados).toFixed(2);
-            document.getElementById('media-mortes').textContent = (somaMortes / totalEstados).toFixed(2);
+            document.getElementById('media-mortes').textContent = mediaMortes.toFixed(2);
         }
         carregarDados();
     </script>
